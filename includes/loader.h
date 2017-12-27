@@ -15,8 +15,7 @@ class LoaderC8 {
       delete[] rom_buffer;
   }
 
-  /* Load a ROM file into memory */
-  bool LoadROM(const char* file_path, RAMChip8& mmu) {
+  bool LoadROM(const char* file_path) {
     int begin = 0;
     int end = 0;
 
@@ -38,10 +37,25 @@ class LoaderC8 {
 
     std::cout << "Read: " << file.gcount() << " characters" << std::endl;
     file.close();
-
-    LoadToMemory(mmu);
     return true;
-  }  
+  }
+
+  /* Load a ROM file into memory */
+  bool LoadROM(const char* file_path, RAMChip8& mmu) {
+    if (true == LoadROM(file_path)) {
+      LoadToMemory(mmu);
+      return true;
+    }
+    return false;
+  }
+
+  int GetBufferSize() {
+    return buffer_size;
+  }
+
+  char* GetFileBuffer() {
+    return rom_buffer;
+  }
 
  private:
   const char* get_rom_buffer() const {
