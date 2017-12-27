@@ -41,7 +41,15 @@ class LoaderC8 {
 
     LoadToMemory(mmu);
     return true;
-  }  
+  }
+
+  int GetBufferSize() {
+    return buffer_size;
+  }
+
+  const char* GetFileBuffer() {
+    return rom_buffer;
+  }
 
  private:
   const char* get_rom_buffer() const {
