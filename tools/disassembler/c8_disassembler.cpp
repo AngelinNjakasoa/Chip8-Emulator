@@ -22,7 +22,7 @@ uint16_t CPUC8Disassembler::MoveOffsetForward(const uint16_t incr_value) {
 }
 
 uint16_t CPUC8Disassembler::MoveOffsetBackward(const uint16_t decr_value) {
-  current_offset -+ decr_value;
+  current_offset -= decr_value;
   return current_offset;
 }
 
