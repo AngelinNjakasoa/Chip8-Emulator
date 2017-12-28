@@ -103,7 +103,7 @@ std::string CPUC8Disassembler::ISIChip8Decoder::INST_BNNN(uint16_t opcode) {
 
 std::string CPUC8Disassembler::ISIChip8Decoder::INST_Cxkk(uint16_t opcode) {
   auto operands = GetRegisterImmediate(opcode);
-  return FormatBinaryOp(mnemonic_table[OP_CXKK], "V" + operands.first, "RANDOM_BYTE & " + operands.second);
+  return FormatBinaryOp(mnemonic_table[OP_CXKK], "V" + operands.first, "RANDOM_BYTE AND " + operands.second);
 }
 
 std::string CPUC8Disassembler::ISIChip8Decoder::INST_Dxyn(uint16_t opcode) {
@@ -123,45 +123,45 @@ std::string CPUC8Disassembler::ISIChip8Decoder::INST_ExA1(uint16_t opcode) {
 
 std::string CPUC8Disassembler::ISIChip8Decoder::INST_Fx07(uint16_t opcode) {
   std::string operand = GetRegister(opcode);
-  return FormatBinaryOp(mnemonic_table[OP_EX | 0x0007], "V" + operand, "DT");
+  return FormatBinaryOp(mnemonic_table[OP_FX], "V" + operand, "DT");
 }
 
 std::string CPUC8Disassembler::ISIChip8Decoder::INST_Fx0A(uint16_t opcode) {
   std::string operand = GetRegister(opcode);
-  return FormatBinaryOp(mnemonic_table[OP_EX | 0x000A], "V" + operand, "K");
+  return FormatBinaryOp(mnemonic_table[OP_FX], "V" + operand, "K");
 }
 
 std::string CPUC8Disassembler::ISIChip8Decoder::INST_Fx15(uint16_t opcode) {
   std::string operand = GetRegister(opcode);
-  return FormatBinaryOp(mnemonic_table[OP_EX | 0x0015], "DT", "V" + operand);
+  return FormatBinaryOp(mnemonic_table[OP_FX], "DT", "V" + operand);
 }
 
 std::string CPUC8Disassembler::ISIChip8Decoder::INST_Fx18(uint16_t opcode) {
   std::string operand = GetRegister(opcode);
-  return FormatBinaryOp(mnemonic_table[OP_EX | 0x0018], "ST", "V" + operand);
+  return FormatBinaryOp(mnemonic_table[OP_FX], "ST", "V" + operand);
 }
 
 std::string CPUC8Disassembler::ISIChip8Decoder::INST_Fx1E(uint16_t opcode) {
   std::string operand = GetRegister(opcode);
-  return FormatBinaryOp(mnemonic_table[OP_EX | 0x001E], "I", "V" + operand);
+  return FormatBinaryOp(mnemonic_table[OP_FX | 0x001E], "I", "V" + operand);
 }
 
 std::string CPUC8Disassembler::ISIChip8Decoder::INST_Fx29(uint16_t opcode) {
   std::string operand = GetRegister(opcode);
-  return FormatBinaryOp(mnemonic_table[OP_EX | 0x0029], "F", "V" + operand);
+  return FormatBinaryOp(mnemonic_table[OP_FX], "F", "V" + operand);
 }
 
 std::string CPUC8Disassembler::ISIChip8Decoder::INST_Fx33(uint16_t opcode) {
   std::string operand = GetRegister(opcode);
-  return FormatBinaryOp(mnemonic_table[OP_EX | 0x0033], "B", "V" + operand);
+  return FormatBinaryOp(mnemonic_table[OP_FX], "B", "V" + operand);
 }
 
 std::string CPUC8Disassembler::ISIChip8Decoder::INST_Fx55(uint16_t opcode) {
   std::string operand = GetRegister(opcode);
-  return FormatBinaryOp(mnemonic_table[OP_EX | 0x0055], "[I]", "V" + operand);
+  return FormatBinaryOp(mnemonic_table[OP_FX], "[I]", "V" + operand);
 }
 
 std::string CPUC8Disassembler::ISIChip8Decoder::INST_Fx65(uint16_t opcode) {
   std::string operand = GetRegister(opcode);
-  return FormatBinaryOp(mnemonic_table[OP_EX | 0x0065], "V" + operand, "[I]");
+  return FormatBinaryOp(mnemonic_table[OP_FX], "V" + operand, "[I]");
 }

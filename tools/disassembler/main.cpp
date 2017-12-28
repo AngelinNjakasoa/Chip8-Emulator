@@ -5,6 +5,7 @@ int main(int argc, char** argv) {
     CPUC8Disassembler c8d;
 
     c8d.LoadBinary(argv[1]);
+    c8d.Disassemble();
     return 0;
   } else {
     std::cerr << "Usage: "
