@@ -1,8 +1,17 @@
 # Chip-8 Emulator
 
-Chip8 emulator from scratch
+Yet another Chip8 emulator and tools.
 
-...Work in progress...
+Work in progress
+
+| Tool | Description |
+|:-----|-----------:|
+|c8-disassembler|Translates chip8 opcode to chip8 assembly language|
+
+## Requirements
+
+ - cmake 3.9
+ - SDL2
 
 ## Build
 
