@@ -9,6 +9,7 @@
 #include "cpu.h"
 #include "loader.h"
 
+/* TODO(Lemme): add comment to CPUC8Disassembler class */
 class CPUC8Disassembler {
  public:
  CPUC8Disassembler()
@@ -125,11 +126,13 @@ class CPUC8Disassembler {
     }
 
     std::string FormatBinaryOp(std::string mnemonic, std::string op1, std::string op2) {
+      /* TODO(Lemme): implement a solution to write the disassembled opcode to a fd or stream */
       std::cout << mnemonic + " " + op1 + ", " + op2 << std::endl;
       return mnemonic + " " + op1 + ", " + op2;
     }
 
     std::string FormatUnaryOp(std::string mnemonic, std::string operand) {
+      /* TODO(Lemme): implement a solution to write the disassembled opcode to a fd or stream */
       std::cout << mnemonic + " " + operand << std::endl;
       return mnemonic + " " + operand;
     }
