@@ -11,14 +11,25 @@
 
 class CPUC8Disassembler {
  public:
+ CPUC8Disassembler()
+   : byte_stream(nullptr), buffer_size(0), offset(0) {}
+
+  ~CPUC8Disassembler() {
+    if (byte_stream != nullptr) {
+      delete [] byte_stream;
+      byte_stream = nullptr;
+    }
+  }
+
   void LoadBinary(const char* path);
   void Disassemble();
+  bool DisassembleOpcode();
+  uint16_t GetOpcodeFromByteStream();
   int GetBufferSize();
-  uint16_t GetCurrentOffset();
+  uint16_t GetOffset();
   uint16_t MoveOffsetForward(const uint16_t incr_value);
   uint16_t MoveOffsetBackward(const uint16_t decr_value);
   uint16_t ResetOffset();
-  void DisassembleOpcode(uint16_t opcode);
 
  private:
   /* Instruction set opcode decoder */
@@ -114,10 +125,12 @@ class CPUC8Disassembler {
     }
 
     std::string FormatBinaryOp(std::string mnemonic, std::string op1, std::string op2) {
+      std::cout << mnemonic + " " + op1 + ", " + op2 << std::endl;
       return mnemonic + " " + op1 + ", " + op2;
     }
 
     std::string FormatUnaryOp(std::string mnemonic, std::string operand) {
+      std::cout << mnemonic + " " + operand << std::endl;
       return mnemonic + " " + operand;
     }
 
@@ -163,8 +176,10 @@ class CPUC8Disassembler {
   };
 
   LoaderC8 loader;
-  uint16_t current_offset;
-  uint16_t max_offset;
+  uint8_t *byte_stream;
+  int buffer_size;
+  uint16_t offset;
+  ISIChip8Decoder isi_decoder;
 };
 
 #endif /* DISASSEMBLER_H */
