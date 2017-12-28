@@ -9,6 +9,7 @@
 #include "cpu.h"
 #include "loader.h"
 
+/* Loads a ROM to memory and disassemble each opcode */
 class CPUC8Disassembler {
  public:
  CPUC8Disassembler()
@@ -21,14 +22,32 @@ class CPUC8Disassembler {
     }
   }
 
+  /* Load the ROM in memory */
   void LoadBinary(const char* path);
+
+  /* Disassemble the ROM loaded in memory */
   void Disassemble();
+
+  /* Fetch the next opcode and disassemble it */
   bool DisassembleOpcode();
+
+  /* Fetch the next opcode from byte stream */
   uint16_t GetOpcodeFromByteStream();
+
+  /* Returns the size of loaded ROM */
+  /* size: number of byte */
   int GetBufferSize();
+
+  /* Returns the current offset */
   uint16_t GetOffset();
+
+  /* Increase the offset value */
   uint16_t MoveOffsetForward(const uint16_t incr_value);
+
+  /* Decrease the offset value */
   uint16_t MoveOffsetBackward(const uint16_t decr_value);
+
+  /* Sets the offset to 0 */
   uint16_t ResetOffset();
 
  private:
@@ -55,7 +74,8 @@ class CPUC8Disassembler {
       OP_FX = 0xF000,
     };
 
-  ISIChip8Decoder() {
+    /* Initialize the mnemonic_table */
+    ISIChip8Decoder() {
       mnemonic_table[0x00E0] = "CLS";
       mnemonic_table[0x00EE] = "RET";
       mnemonic_table[OP_1NNN] = "JP";
@@ -89,13 +109,16 @@ class CPUC8Disassembler {
       sstream.str("");
     }
 
-    /* Get the NNN address for 1NNN, 2NNN, ANNN and BNNN instructions */
+    /* Returns the NNN address for 1NNN, 2NNN, ANNN and BNNN instructions */
     std::string GetAddr(uint16_t opcode) {
       ClearStream();
       sstream << std::hex << static_cast<int>(opcode & 0x0FFF);
       return sstream.str();
     }
 
+    /* Returns a std::pair<string, string> */
+    /* first: contains a register number */
+    /* second: contains an immediate value */
     std::pair<std::string, std::string> GetRegisterImmediate(uint16_t opcode) {
       ClearStream();
       std::pair<std::string, std::string> operands;
@@ -107,6 +130,9 @@ class CPUC8Disassembler {
       return operands;
     }
 
+    /* Returns a st::pair<string, string> */
+    /* first: contains a register number */
+    /* second: contains a register number */
     std::pair<std::string, std::string> GetRegisters(uint16_t opcode) {
       ClearStream();
       std::pair<std::string, std::string> operands;
@@ -118,6 +144,7 @@ class CPUC8Disassembler {
       return operands;
     }
 
+    /* Return a register number */
     std::string GetRegister(uint16_t opcode) {
       ClearStream();
       sstream << std::hex << static_cast<int>((opcode & 0x0F00) >> 8);
@@ -125,16 +152,18 @@ class CPUC8Disassembler {
     }
 
     std::string FormatBinaryOp(std::string mnemonic, std::string op1, std::string op2) {
+      /* TODO(Lemme): implement a solution to write the disassembled opcode to a fd or stream */
       std::cout << mnemonic + " " + op1 + ", " + op2 << std::endl;
       return mnemonic + " " + op1 + ", " + op2;
     }
 
     std::string FormatUnaryOp(std::string mnemonic, std::string operand) {
+      /* TODO(Lemme): implement a solution to write the disassembled opcode to a fd or stream */
       std::cout << mnemonic + " " + operand << std::endl;
       return mnemonic + " " + operand;
     }
 
-    /* Implementation of the opcode decoder */
+    /* Implements of the opcode decoder for each encoded instruction */
     std::string INST_00E0(uint16_t opcode);
     std::string INST_00EE(uint16_t opcode);
     std::string INST_1NNN(uint16_t opcode);
