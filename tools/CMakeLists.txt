@@ -12,6 +12,7 @@ set(SOURCE_HEADER_FILES
 
 set(TOOLS_SOURCES
   "${TOOLS_SOURCE_DIRECTORY}/c8_disassembler.cpp"
+  "${TOOLS_SOURCE_DIRECTORY}/instructions.cpp"
   "${TOOLS_SOURCE_DIRECTORY}/main.cpp")
 
 add_executable(c8-disassembler ${TOOLS_SOURCES} ${SOURCE_HEADER_FILES})
