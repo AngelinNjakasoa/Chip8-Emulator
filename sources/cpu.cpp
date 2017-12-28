@@ -4,7 +4,7 @@
 /* size of pc is 16bits */
 /* size of memory cell is 8bits */
 uint16_t CPUChip8::FetchOpcode(RAMChip8& mmu) {
-  return mmu.memory[pc] << 8 | mmu.memory[pc + 1];
+  return (mmu.memory[pc] << 8) | mmu.memory[pc + 1];
 }
 
 /* Increments the program counter */
