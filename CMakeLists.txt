@@ -3,10 +3,12 @@ project(Chip-8)
 
 find_package(SDL2 REQUIRED)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
+
 set(SOURCE_DIRECTORY
   "${CMAKE_CURRENT_SOURCE_DIR}")
 
-include_directories(${SOURCE_DIRECTORY}/includes ${SDL2_INCLUDE_DIRS})
+include_directories(${SOURCE_DIRECTORY}/includes ${SDL2_INCLUDE_DIRS} ${CURSES_INCLUDE_DIR})
 
 set(HEADER_FILES
   "${SOURCE_DIRECTORY}/includes/cpu.h"
@@ -21,5 +23,6 @@ set(SOURCES
   "${SOURCE_DIRECTORY}/sources/instructions.cpp"
   "${SOURCE_DIRECTORY}/sources/main.cpp")
 
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build/bin/)
 add_executable(chip8 ${SOURCES} ${HEADER_FILES})
-target_link_libraries(chip8 ncurses ${SDL2_LIBRARIES})
+target_link_libraries(chip8 ${SDL2_LIBRARIES})

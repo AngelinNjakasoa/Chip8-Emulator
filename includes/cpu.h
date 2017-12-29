@@ -13,7 +13,7 @@
 class CPUChip8 {
  public:
  CPUChip8()
-   : pc(0x200), I(0), sp(0), dt(0), isi(*this), st(0), id("cpu") {}
+   : pc(0x200), I(0), sp(0), dt(0), st(0), isi(*this), id("cpu") {}
 
   bool EmulateCycle(RAMChip8& mmu,
 		    GPUChip8& gpu,
@@ -67,54 +67,54 @@ class CPUChip8 {
     /* INST_ contains instruction's implementation */
     void INST_00E0(GPUChip8& gpu);
     void INST_00EE(RAMChip8& mmu);
-    void INST_1NNN(uint16_t opcode);
-    void INST_2NNN(RAMChip8& mmu, uint16_t opcode);
-    void INST_3xkk(uint16_t opcode);
-    void INST_4xkk(uint16_t opcode);
-    void INST_5xy0(uint16_t opcode);
-    void INST_6xkk(uint16_t opcode);
-    void INST_7xkk(uint16_t opcode);
-    void INST_8xy0(uint16_t opcode);
-    void INST_8xy1(uint16_t opcode);
-    void INST_8xy2(uint16_t opcode);
-    void INST_8xy3(uint16_t opcode);
-    void INST_8xy4(uint16_t opcode);
-    void INST_8xy5(uint16_t opcode);
-    void INST_8xy6(uint16_t opcode);
-    void INST_8xy7(uint16_t opcode);
-    void INST_8xyE(uint16_t opcode);
-    void INST_9xy0(uint16_t opcode);
-    void INST_ANNN(uint16_t opcode);
-    void INST_BNNN(uint16_t opcode);
-    void INST_Cxkk(uint16_t opcode);
+    void INST_1NNN(const uint16_t opcode);
+    void INST_2NNN(RAMChip8& mmu, const uint16_t opcode);
+    void INST_3xkk(const uint16_t opcode);
+    void INST_4xkk(const uint16_t opcode);
+    void INST_5xy0(const uint16_t opcode);
+    void INST_6xkk(const uint16_t opcode);
+    void INST_7xkk(const uint16_t opcode);
+    void INST_8xy0(const uint16_t opcode);
+    void INST_8xy1(const uint16_t opcode);
+    void INST_8xy2(const uint16_t opcode);
+    void INST_8xy3(const uint16_t opcode);
+    void INST_8xy4(const uint16_t opcode);
+    void INST_8xy5(const uint16_t opcode);
+    void INST_8xy6(const uint16_t opcode);
+    void INST_8xy7(const uint16_t opcode);
+    void INST_8xyE(const uint16_t opcode);
+    void INST_9xy0(const uint16_t opcode);
+    void INST_ANNN(const uint16_t opcode);
+    void INST_BNNN(const uint16_t opcode);
+    void INST_Cxkk(const uint16_t opcode);
     void INST_Dxyn(GPUChip8& gpu,
 		   RAMChip8& mmu,
-		   uint16_t opcode);
-    void INST_Ex9E(CUChip8& cui, uint16_t opcode);
-    void INST_ExA1(CUChip8& cui, uint16_t opcode);
-    void INST_Fx07(uint16_t opcode);
-    void INST_Fx0A(CUChip8& cui, uint16_t opcode);
-    void INST_Fx15(uint16_t opcode);
-    void INST_Fx18(uint16_t opcode);
-    void INST_Fx1E(uint16_t opcode);
-    void INST_Fx29(uint16_t opcode);
-    void INST_Fx33(RAMChip8& mmu, uint16_t opcode);
-    void INST_Fx55(RAMChip8& mmu, uint16_t opcode);
-    void INST_Fx65(RAMChip8& mmu, uint16_t opcode);
+		   const uint16_t opcode);
+    void INST_Ex9E(CUChip8& cui, const uint16_t opcode);
+    void INST_ExA1(CUChip8& cui, const uint16_t opcode);
+    void INST_Fx07(const uint16_t opcode);
+    void INST_Fx0A(CUChip8& cui, const uint16_t opcode);
+    void INST_Fx15(const uint16_t opcode);
+    void INST_Fx18(const uint16_t opcode);
+    void INST_Fx1E(const uint16_t opcode);
+    void INST_Fx29(const uint16_t opcode);
+    void INST_Fx33(RAMChip8& mmu, const uint16_t opcode);
+    void INST_Fx55(RAMChip8& mmu, const uint16_t opcode);
+    void INST_Fx65(RAMChip8& mmu, const uint16_t opcode);
 
   private:
     CPUChip8& cpu;
   };
 
-  void IncrementPC(uint nb_increment);
-  uint16_t FetchOpcode(RAMChip8& mmu);
+  void IncrementPC(const uint nb_increment);
+  uint16_t FetchOpcode(const RAMChip8 & mmu) const;
   bool InterpretOpcode(RAMChip8& mmu,
 		       GPUChip8& gpu,
 		       CUChip8& cui);
 
   ISIChip8 isi;
-  std::string id;
   std::mt19937 rng;
+  std::string id;
 };
 
 #endif /* __CPU_H__ */

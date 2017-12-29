@@ -5,6 +5,7 @@
 #include <string>
 
 /* Load a ROM into chip8 emulator's memory */
+/* LoaderC8 is movable but not copyable */
 class LoaderC8 {
  public:
  LoaderC8()
@@ -15,7 +16,25 @@ class LoaderC8 {
       delete[] rom_buffer;
   }
 
-  bool LoadROM(const char* file_path) {
+  /* Move assignment operator */
+  LoaderC8& operator=(LoaderC8&& loader) {
+    if (this != &loader) {
+      file = std::move(loader.file);
+      id = loader.id;
+      rom_buffer = loader.rom_buffer;
+      loader.rom_buffer = nullptr;
+      buffer_size = loader.buffer_size;
+      loader.buffer_size = 0;
+    }
+    return *this;
+  }
+
+  /* Move constructor */
+  LoaderC8(LoaderC8&& loader) {
+    *this = std::move(loader);
+  }
+
+  bool LoadROM(char const * const file_path) {
     int begin = 0;
     int end = 0;
 
@@ -29,19 +48,18 @@ class LoaderC8 {
     file.seekg(0, std::ios::end);
     end = file.tellg();
     buffer_size = end - begin;
-    std::cout << "file_size: " << buffer_size << std::endl;
+    std::cout << "file_size: " << buffer_size << " bytes" << std::endl;
 
     file.seekg(0, std::ios::beg);
     rom_buffer = new char [buffer_size];
     file.read(rom_buffer, buffer_size);
 
-    std::cout << "Read: " << file.gcount() << " characters" << std::endl;
     file.close();
     return true;
   }
 
   /* Load a ROM file into memory */
-  bool LoadROM(const char* file_path, RAMChip8& mmu) {
+  bool LoadROM(char const * const file_path, RAMChip8& mmu) {
     if (true == LoadROM(file_path)) {
       LoadToMemory(mmu);
       return true;
@@ -49,15 +67,22 @@ class LoaderC8 {
     return false;
   }
 
-  int GetBufferSize() {
+  int GetBufferSize() const {
     return buffer_size;
   }
 
-  char* GetFileBuffer() {
+  const char* GetFileBuffer() const {
     return rom_buffer;
   }
 
  private:
+
+  /* Makes LoaderC8 not Copyable */
+  LoaderC8& operator=(const LoaderC8&) = delete;
+
+  /* Makes LoaderC8 not Copyable */
+  LoaderC8(const LoaderC8&) = delete;
+
   const char* get_rom_buffer() const {
     return rom_buffer;
   }
@@ -67,9 +92,12 @@ class LoaderC8 {
     if (buffer_size > (4096 - 512)) {
       std::cerr << "Error(loader): ROM too large" << std::endl;
       return false;
+    } else if (buffer_size < 0) {
+      std::cerr << "Error(loader): Negative ROM size" << std::endl;
+      return false;
     }
 
-    for (uint i = 0; i < buffer_size; ++i) {
+    for (int i = 0; i < buffer_size; ++i) {
       mmu.memory[i + 512] = static_cast<uint8_t>(rom_buffer[i]);
     }
 

@@ -23,7 +23,7 @@ class CPUC8Disassembler {
   }
 
   /* Load the ROM in memory */
-  void LoadBinary(const char* path);
+  void LoadBinary(char const * const path);
 
   /* Disassemble the ROM loaded in memory */
   void Disassemble();
@@ -32,14 +32,14 @@ class CPUC8Disassembler {
   bool DisassembleOpcode();
 
   /* Fetch the next opcode from byte stream */
-  uint16_t GetOpcodeFromByteStream();
+  uint16_t GetOpcodeFromByteStream() const;
 
   /* Returns the size of loaded ROM */
   /* size: number of byte */
-  int GetBufferSize();
+  int GetBufferSize() const;
 
   /* Returns the current offset */
-  uint16_t GetOffset();
+  uint16_t GetOffset() const;
 
   /* Increase the offset value */
   uint16_t MoveOffsetForward(const uint16_t incr_value);
@@ -110,7 +110,7 @@ class CPUC8Disassembler {
     }
 
     /* Returns the NNN address for 1NNN, 2NNN, ANNN and BNNN instructions */
-    std::string GetAddr(uint16_t opcode) {
+    std::string GetAddr(const uint16_t opcode) {
       ClearStream();
       sstream << std::hex << static_cast<int>(opcode & 0x0FFF);
       return sstream.str();
@@ -119,7 +119,7 @@ class CPUC8Disassembler {
     /* Returns a std::pair<string, string> */
     /* first: contains a register number */
     /* second: contains an immediate value */
-    std::pair<std::string, std::string> GetRegisterImmediate(uint16_t opcode) {
+    std::pair<std::string, std::string> GetRegisterImmediate(const uint16_t opcode) {
       ClearStream();
       std::pair<std::string, std::string> operands;
       sstream << std::hex << static_cast<int>((opcode & 0x0F00) >> 8);
@@ -133,7 +133,7 @@ class CPUC8Disassembler {
     /* Returns a st::pair<string, string> */
     /* first: contains a register number */
     /* second: contains a register number */
-    std::pair<std::string, std::string> GetRegisters(uint16_t opcode) {
+    std::pair<std::string, std::string> GetRegisters(const uint16_t opcode) {
       ClearStream();
       std::pair<std::string, std::string> operands;
       sstream << std::hex << static_cast<int>((opcode & 0x0F00) >> 8);
@@ -145,59 +145,57 @@ class CPUC8Disassembler {
     }
 
     /* Return a register number */
-    std::string GetRegister(uint16_t opcode) {
+    std::string GetRegister(const uint16_t opcode) {
       ClearStream();
       sstream << std::hex << static_cast<int>((opcode & 0x0F00) >> 8);
       return sstream.str();
     }
 
-    std::string FormatBinaryOp(std::string mnemonic, std::string op1, std::string op2) {
-      /* TODO(Lemme): implement a solution to write the disassembled opcode to a fd or stream */
+    std::string FormatBinaryOp(const std::string & mnemonic, std::string op1, std::string op2) {
       std::cout << mnemonic + " " + op1 + ", " + op2 << std::endl;
       return mnemonic + " " + op1 + ", " + op2;
     }
 
-    std::string FormatUnaryOp(std::string mnemonic, std::string operand) {
-      /* TODO(Lemme): implement a solution to write the disassembled opcode to a fd or stream */
+    std::string FormatUnaryOp(const std::string & mnemonic, std::string operand) {
       std::cout << mnemonic + " " + operand << std::endl;
       return mnemonic + " " + operand;
     }
 
     /* Implements of the opcode decoder for each encoded instruction */
-    std::string INST_00E0(uint16_t opcode);
-    std::string INST_00EE(uint16_t opcode);
-    std::string INST_1NNN(uint16_t opcode);
-    std::string INST_2NNN(uint16_t opcode);
-    std::string INST_3xkk(uint16_t opcode);
-    std::string INST_4xkk(uint16_t opcode);
-    std::string INST_5xy0(uint16_t opcode);
-    std::string INST_6xkk(uint16_t opcode);
-    std::string INST_7xkk(uint16_t opcode);
-    std::string INST_8xy0(uint16_t opcode);
-    std::string INST_8xy1(uint16_t opcode);
-    std::string INST_8xy2(uint16_t opcode);
-    std::string INST_8xy3(uint16_t opcode);
-    std::string INST_8xy4(uint16_t opcode);
-    std::string INST_8xy5(uint16_t opcode);
-    std::string INST_8xy6(uint16_t opcode);
-    std::string INST_8xy7(uint16_t opcode);
-    std::string INST_8xyE(uint16_t opcode);
-    std::string INST_9xy0(uint16_t opcode);
-    std::string INST_ANNN(uint16_t opcode);
-    std::string INST_BNNN(uint16_t opcode);
-    std::string INST_Cxkk(uint16_t opcode);
-    std::string INST_Dxyn(uint16_t opcode);
-    std::string INST_Ex9E(uint16_t opcode);
-    std::string INST_ExA1(uint16_t opcode);
-    std::string INST_Fx07(uint16_t opcode);
-    std::string INST_Fx0A(uint16_t opcode);
-    std::string INST_Fx15(uint16_t opcode);
-    std::string INST_Fx18(uint16_t opcode);
-    std::string INST_Fx1E(uint16_t opcode);
-    std::string INST_Fx29(uint16_t opcode);
-    std::string INST_Fx33(uint16_t opcode);
-    std::string INST_Fx55(uint16_t opcode);
-    std::string INST_Fx65(uint16_t opcode);
+    std::string INST_00E0(const uint16_t opcode);
+    std::string INST_00EE(const uint16_t opcode);
+    std::string INST_1NNN(const uint16_t opcode);
+    std::string INST_2NNN(const uint16_t opcode);
+    std::string INST_3xkk(const uint16_t opcode);
+    std::string INST_4xkk(const uint16_t opcode);
+    std::string INST_5xy0(const uint16_t opcode);
+    std::string INST_6xkk(const uint16_t opcode);
+    std::string INST_7xkk(const uint16_t opcode);
+    std::string INST_8xy0(const uint16_t opcode);
+    std::string INST_8xy1(const uint16_t opcode);
+    std::string INST_8xy2(const uint16_t opcode);
+    std::string INST_8xy3(const uint16_t opcode);
+    std::string INST_8xy4(const uint16_t opcode);
+    std::string INST_8xy5(const uint16_t opcode);
+    std::string INST_8xy6(const uint16_t opcode);
+    std::string INST_8xy7(const uint16_t opcode);
+    std::string INST_8xyE(const uint16_t opcode);
+    std::string INST_9xy0(const uint16_t opcode);
+    std::string INST_ANNN(const uint16_t opcode);
+    std::string INST_BNNN(const uint16_t opcode);
+    std::string INST_Cxkk(const uint16_t opcode);
+    std::string INST_Dxyn(const uint16_t opcode);
+    std::string INST_Ex9E(const uint16_t opcode);
+    std::string INST_ExA1(const uint16_t opcode);
+    std::string INST_Fx07(const uint16_t opcode);
+    std::string INST_Fx0A(const uint16_t opcode);
+    std::string INST_Fx15(const uint16_t opcode);
+    std::string INST_Fx18(const uint16_t opcode);
+    std::string INST_Fx1E(const uint16_t opcode);
+    std::string INST_Fx29(const uint16_t opcode);
+    std::string INST_Fx33(const uint16_t opcode);
+    std::string INST_Fx55(const uint16_t opcode);
+    std::string INST_Fx65(const uint16_t opcode);
 
   private:
     std::stringstream sstream;
