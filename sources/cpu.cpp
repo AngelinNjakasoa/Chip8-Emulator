@@ -3,7 +3,7 @@
 /* MSB endian */
 /* size of pc is 16bits */
 /* size of memory cell is 8bits */
-uint16_t CPUChip8::FetchOpcode(RAMChip8& mmu) {
+uint16_t CPUChip8::FetchOpcode(const RAMChip8 & mmu) const {
   return (mmu.memory[pc] << 8) | mmu.memory[pc + 1];
 }
 

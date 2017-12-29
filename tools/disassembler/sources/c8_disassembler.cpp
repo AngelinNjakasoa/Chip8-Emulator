@@ -1,8 +1,8 @@
 #include "c8_disassembler.h"
 
-void CPUC8Disassembler::LoadBinary(const char* path) {
+void CPUC8Disassembler::LoadBinary(char const * const path) {
   loader.LoadROM(path);
-  char* buffer = loader.GetFileBuffer();
+  const char* buffer = loader.GetFileBuffer();
   buffer_size = loader.GetBufferSize();
   byte_stream = new uint8_t[buffer_size];
   for (uint16_t i = 0; i < buffer_size; ++i) {
@@ -11,7 +11,7 @@ void CPUC8Disassembler::LoadBinary(const char* path) {
   std::cout << std::endl;
 }
 
-uint16_t CPUC8Disassembler::GetOpcodeFromByteStream() {
+uint16_t CPUC8Disassembler::GetOpcodeFromByteStream() const {
   return (byte_stream[offset] << 8) | byte_stream[offset + 1];
 }
 
@@ -103,7 +103,10 @@ bool CPUC8Disassembler::DisassembleOpcode() {
 
     default:
       MoveOffsetForward(1);
-      std::cerr << "Unknown OP_8: " << std::hex << static_cast<int>(opcode) << std::endl;
+      std::cerr << "Unknown OP_8: "
+		<< std::hex
+		<< static_cast<int>(opcode)
+		<< std::endl;
     }
     break;
   case CPUC8Disassembler::ISIChip8Decoder::OPCODE::OP_9XY:
@@ -138,7 +141,10 @@ bool CPUC8Disassembler::DisassembleOpcode() {
       break;
     default:
       MoveOffsetForward(1);
-      std::cerr << "Unknown OP_E: " << std::hex << static_cast<int>(opcode) << std::endl;
+      std::cerr << "Unknown OP_E: "
+		<< std::hex
+		<< static_cast<int>(opcode)
+		<< std::endl;
     }
     break;
   case CPUC8Disassembler::ISIChip8Decoder::OPCODE::OP_FX:
@@ -181,13 +187,19 @@ bool CPUC8Disassembler::DisassembleOpcode() {
       break;
     default:
       MoveOffsetForward(1);
-      std::cerr << "Unknown OP_F: " << std::hex << static_cast<int>(opcode) << std::endl;
+      std::cerr << "Unknown OP_F: "
+		<< std::hex
+		<< static_cast<int>(opcode)
+		<< std::endl;
     }
     break;
 
   default:
     MoveOffsetForward(1);
-    std::cerr << "CPU: unrecognized opcode: " << std::hex << static_cast<int>(opcode) << std::endl;
+    std::cerr << "CPU: unrecognized opcode: "
+	      << std::hex
+	      << static_cast<int>(opcode)
+	      << std::endl;
     return false;
   }
   return true;
@@ -198,11 +210,11 @@ void CPUC8Disassembler::Disassemble() {
     ;
 }
 
-int CPUC8Disassembler::GetBufferSize() {
+int CPUC8Disassembler::GetBufferSize() const {
   return loader.GetBufferSize();
 }
 
-uint16_t CPUC8Disassembler::GetOffset() {
+uint16_t CPUC8Disassembler::GetOffset() const {
   return offset;
 }
 

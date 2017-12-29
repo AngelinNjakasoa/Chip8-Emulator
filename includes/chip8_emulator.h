@@ -12,11 +12,11 @@ class CHIP8Emulator {
  public:
  CHIP8Emulator() : quit(false) {}
 
-  bool LoadROM(const char* file_path) {
-    loader.LoadROM(file_path, mmu);
+  bool LoadROM(char const * const file_path) {
+    return loader.LoadROM(file_path, mmu);
   }
 
-  void PrintMemory(uint16_t from, uint16_t to) {
+  void PrintMemory(const uint16_t from, const uint16_t to) const {
     for (uint16_t i = 0; (i + from) <= to; ++i) {
       std::cerr << std::hex << static_cast<int>(mmu.memory[i + from]);
     }

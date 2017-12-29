@@ -8,7 +8,7 @@ class RAMChip8 {
  public:
  RAMChip8()
    : id("memory") {
-    const uint8_t font_sprites[80] = {
+    const uint8_t font_sprites [80] = {
       0xF0, 0x90, 0x90, 0x90, 0xF0,
       0x20, 0x60, 0x20, 0x20, 0x70,
       0xF0, 0x10, 0xF0, 0x80, 0xF0,
@@ -36,15 +36,15 @@ class RAMChip8 {
 
   uint8_t memory[4096];
 
-  uint8_t read_memory(uint16_t pc) {
+  uint8_t read_memory(const uint16_t pc) {
     return memory[pc];
   }
 
-  void write_memory(uint16_t pc, uint8_t value) {
+  void write_memory(const uint16_t pc, const uint8_t value) {
     memory[pc] = value;
   }
 
-  uint8_t push_stack(uint8_t sp, uint16_t value) {
+  uint8_t push_stack(uint8_t sp, const uint16_t value) {
     stack[sp] = value;
     return sp - 1;
   }

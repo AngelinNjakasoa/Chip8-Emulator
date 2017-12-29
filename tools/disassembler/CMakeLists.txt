@@ -1,14 +1,17 @@
 cmake_minimum_required(VERSION 3.9)
 project(Chip-8-Disassembler)
 
-set(TOOLS_SOURCE_DIRECTORY
-  "${CMAKE_CURRENT_SOURCE_DIR}/disassembler")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 
-include_directories(${TOOLS_SOURCE_DIRECTORY}/../../includes)
+set(TOOLS_SOURCE_DIRECTORY
+  "${CMAKE_CURRENT_SOURCE_DIR}/sources")
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/includes)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../includes)
 
 set(SOURCE_HEADER_FILES
-  "${TOOLS_SOURCE_DIRECTORY}/../../includes/cpu.h"
-  "${TOOLS_SOURCE_DIRECTORY}/c8_disassembler.h")
+  "${CMAKE_CURRENT_SOURCE_DIR}/../../includes/cpu.h"
+  "${CMAKE_CURRENT_SOURCE_DIR}/includes/c8_disassembler.h")
 
 set(TOOLS_SOURCES
   "${TOOLS_SOURCE_DIRECTORY}/c8_disassembler.cpp"
@@ -16,5 +19,3 @@ set(TOOLS_SOURCES
   "${TOOLS_SOURCE_DIRECTORY}/main.cpp")
 
 add_executable(c8-disassembler ${TOOLS_SOURCES} ${SOURCE_HEADER_FILES})
-
-

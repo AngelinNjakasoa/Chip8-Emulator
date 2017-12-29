@@ -77,7 +77,7 @@ class CUChip8 {
 
   SDL_Event event;
   uint8_t keys[16];
-  std::string id;
+  const std::string id;
 };
 
 #endif /* __CONTROLLER_UNIT_H__ */

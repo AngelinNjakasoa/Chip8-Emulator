@@ -8,7 +8,7 @@
 class GPUChip8 {
  public:
  GPUChip8()
-   :  width(64), height(32), screen_buffer(nullptr), refresh(false), id("gpu") {
+   :  height(32), width(64), screen_buffer(nullptr), refresh(false), id("gpu") {
     Initialize();
   }
 
@@ -30,12 +30,12 @@ class GPUChip8 {
     refresh = value;
   }
 
-  void DrawPixel(uint8_t x, uint8_t y, uint8_t value) {
+  void DrawPixel(const uint8_t x, const uint8_t y, const uint8_t value) {
     if ((screen_buffer != nullptr) && (x + y * width < (width * height)))
       screen_buffer[x + y * width] = value;
   }
 
-  uint8_t GetPixel(uint8_t x, uint8_t y) {
+  uint8_t GetPixel(const uint8_t x, const uint8_t y) const {
     return ((screen_buffer != nullptr) && ((x + y * width) < (width * height)))
       ? screen_buffer[x + y * width] : 0;
   }
@@ -47,7 +47,7 @@ class GPUChip8 {
     }
   }
 
-  void PrintScreen() {
+  void PrintScreen() const {
     if ((screen_buffer != nullptr))
       for (uint y = 0; y < height; ++y) {
 	for (uint x = 0; x < width; ++x) {
