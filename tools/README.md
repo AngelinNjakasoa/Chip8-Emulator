@@ -1,8 +1,11 @@
 # Tool: Disassembler
 
-c8_disassembler is a tiny chip8 disassembler
+c8_disassembler is a tiny chip8 disassembler. It implements a linear sweap approach, I choose this approach because it is fast to implement and straightforward to understand.
 
-...Work in progress...
+### Todo list
+
+ - Test extensively the c8_disassembler
+ - Support Super Chip-48 Instructions
 
 ## Requirements
 
