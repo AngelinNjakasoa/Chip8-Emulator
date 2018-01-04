@@ -1,11 +1,13 @@
 #ifndef __RAMCHIP8_H__
 # define __RAMCHIP8_H__
 
+#include <algorithm>
 #include <string>
 
 /* Emulates Chip8 memory */
 class RAMChip8 {
  public:
+
  RAMChip8()
    : id("memory") {
     const uint8_t font_sprites [80] = {
@@ -27,9 +29,7 @@ class RAMChip8 {
       0xF0, 0x80, 0xF0, 0x80, 0x80
     };
 
-    for (uint i = 0; i < 80; ++i) {
-      memory[i] = font_sprites[i];
-    }
+    std::copy(std::begin(font_sprites), std::end(font_sprites), memory);
   }
 
   uint16_t stack[16];

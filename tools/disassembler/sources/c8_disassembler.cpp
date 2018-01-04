@@ -31,7 +31,10 @@ bool CPUC8Disassembler::DisassembleOpcode() {
       break;
     default:
       MoveOffsetForward(1);
-      std::cerr << "Unknown opcode from OP_0NNN:" << std::hex << static_cast<int>(opcode) << std::endl;
+      std::cerr << "Unknown opcode from OP_0NNN:"
+		<< std::hex
+		<< static_cast<int>(opcode)
+		<< std::endl;
     }
     break;
   case CPUC8Disassembler::ISIChip8Decoder::OPCODE::OP_1NNN:

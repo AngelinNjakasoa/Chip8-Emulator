@@ -5,6 +5,7 @@
 #include <string>
 
 /* Load a ROM into chip8 emulator's memory */
+/* LoaderC8 is movable but not copyable */
 class LoaderC8 {
  public:
  LoaderC8()
@@ -13,6 +14,24 @@ class LoaderC8 {
   ~LoaderC8() {
     if (rom_buffer != nullptr)
       delete[] rom_buffer;
+  }
+
+  /* Move assignment operator */
+  LoaderC8& operator=(LoaderC8&& loader) {
+    if (this != &loader) {
+      file = std::move(loader.file);
+      id = loader.id;
+      rom_buffer = loader.rom_buffer;
+      loader.rom_buffer = nullptr;
+      buffer_size = loader.buffer_size;
+      loader.buffer_size = 0;
+    }
+    return *this;
+  }
+
+  /* Move constructor */
+  LoaderC8(LoaderC8&& loader) {
+    *this = std::move(loader);
   }
 
   bool LoadROM(char const * const file_path) {
@@ -58,6 +77,13 @@ class LoaderC8 {
   }
 
  private:
+
+  /* Makes LoaderC8 not Copyable */
+  LoaderC8& operator=(const LoaderC8&) = delete;
+
+  /* Makes LoaderC8 not Copyable */
+  LoaderC8(const LoaderC8&) = delete;
+
   const char* get_rom_buffer() const {
     return rom_buffer;
   }

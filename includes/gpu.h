@@ -1,12 +1,15 @@
 #ifndef __GPUCHIP8_H__
 # define __GPUCHIP8_H__
 
+#include <algorithm>
 #include <string>
 #include <SDL2/SDL.h>
 
 /* Emulates Chip8 display */
+/* Work in progress */
 class GPUChip8 {
  public:
+
  GPUChip8()
    :  height(32), width(64), screen_buffer(nullptr), refresh(false), id("gpu") {
     Initialize();
@@ -22,6 +25,7 @@ class GPUChip8 {
 
   void Initialize() {
     screen_buffer = new uint8_t[width * height];
+    std::fill_n(screen_buffer, width * height, 0);
     SDL_Init(SDL_INIT_VIDEO);
     window = SDL_CreateWindow("Chip8", 0, 0, 640, 320, SDL_WINDOW_SHOWN);
   }
@@ -41,10 +45,7 @@ class GPUChip8 {
   }
 
   void ClearScreen() {
-    uint offset_max = width * height;
-    for (uint i = 0; i < offset_max; ++i) {
-      screen_buffer[i] = 0;
-    }
+    std::fill_n(screen_buffer, width * height, 0);
   }
 
   void PrintScreen() const {
@@ -62,6 +63,13 @@ class GPUChip8 {
   }
 
  private:
+
+  /* Not copyable */
+  GPUChip8& operator=(const GPUChip8&) = delete;
+
+  /* Not copyable */
+  GPUChip8(const GPUChip8&) = delete;
+
   SDL_Window* window;
   const uint8_t height;
   const uint8_t width;

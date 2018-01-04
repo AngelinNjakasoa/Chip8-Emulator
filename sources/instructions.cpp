@@ -184,7 +184,7 @@ void CPUChip8::ISIChip8::INST_Dxyn(GPUChip8& gpu, RAMChip8& mmu, const uint16_t 
 
 /* Skip the next instruction if key with the value Vx is pressed */
 void CPUChip8::ISIChip8::INST_Ex9E(CUChip8& cui, const uint16_t opcode) {
-  if (cui.keys[cpu.v_registers[(opcode & 0x0F00) >> 8]] != 0) {
+  if (cui.GetKey(cpu.v_registers[(opcode & 0x0F00) >> 8]) != 0) {
     cpu.IncrementPC(2);
     return ;
   }
@@ -194,7 +194,7 @@ void CPUChip8::ISIChip8::INST_Ex9E(CUChip8& cui, const uint16_t opcode) {
 /* ExA1 - SKNP Vx */
 /* Skip next instruction if key with the value of Vx is not pressed. */
 void CPUChip8::ISIChip8::INST_ExA1(CUChip8& cui, const uint16_t opcode) {
-  if (cui.keys[cpu.v_registers[(opcode & 0x0F00) >> 8]] == 0) {
+  if (cui.GetKey(cpu.v_registers[(opcode & 0x0F00) >> 8]) == 0) {
     cpu.IncrementPC(2);
     return ;
   }
@@ -215,8 +215,9 @@ void CPUChip8::ISIChip8::INST_Fx0A(CUChip8& cui, const uint16_t opcode) {
   bool key_pressed = false;
 
   for (uint i = 0; i < 16; ++i) {
-    if (cui.keys[i] != 0) {
-      cpu.v_registers[(opcode & 0x0F00) >> 8] = cui.keys[i];
+    auto key = cui.GetKey(i);
+    if (key != 0) {
+      cpu.v_registers[(opcode & 0x0F00) >> 8] = key;
       key_pressed = true;
     }
   }
